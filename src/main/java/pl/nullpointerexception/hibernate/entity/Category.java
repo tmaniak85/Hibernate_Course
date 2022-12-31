@@ -2,6 +2,7 @@ package pl.nullpointerexception.hibernate.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Category {
@@ -12,9 +13,8 @@ public class Category {
     private String name;
     private String description;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "category_id")
-    private List<Product> products;
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "category")
+    private Set<Product> products;
 
     public Long getId() {
         return id;
@@ -40,11 +40,20 @@ public class Category {
         this.description = description;
     }
 
-    public List<Product> getProducts() {
+    public Set<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(Set<Product> products) {
         this.products = products;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

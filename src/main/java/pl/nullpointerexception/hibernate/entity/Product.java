@@ -25,7 +25,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private Set<Review> reviews = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Category category;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
