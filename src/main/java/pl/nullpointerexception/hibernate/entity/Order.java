@@ -1,10 +1,45 @@
 package pl.nullpointerexception.hibernate.entity;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+//@NamedEntityGraph(
+//        name = "order-rows",
+//        attributeNodes = @NamedAttributeNode("orderRows")
+//)
+//@NamedEntityGraph(
+//        name = "order-rows",
+//        attributeNodes = {
+//                @NamedAttributeNode("orderRows"),
+//                @NamedAttributeNode("customer")
+//        }
+//)
+//@NamedEntityGraph(
+//        name = "order-rows",
+//        attributeNodes = {
+//                @NamedAttributeNode(value = "orderRows", subgraph = "orderRows"),
+//                @NamedAttributeNode("customer")
+//        }, subgraphs = @NamedSubgraph(name = "orderRows", attributeNodes = @NamedAttributeNode("product"))
+//)
+@NamedEntityGraphs({
+        @NamedEntityGraph(
+                name = "order-rows",
+                attributeNodes = {
+                        @NamedAttributeNode(value = "orderRows", subgraph = "orderRows"),
+                        @NamedAttributeNode("customer")
+                }, subgraphs = @NamedSubgraph(name = "orderRows", attributeNodes = @NamedAttributeNode("product"))
+        ),
+        @NamedEntityGraph(
+                name = "order-and-rows",
+                attributeNodes = @NamedAttributeNode("orderRows")
+        )
+})
 @Entity
 @Table(name = "\"order\"")
 public class Order {
@@ -17,7 +52,12 @@ public class Order {
 
     @OneToMany
     @JoinColumn(name = "order_id")
+    @BatchSize(size = 10)
+//    @Fetch(FetchMode.SUBSELECT)
     private Set<OrderRow> orderRows;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -49,6 +89,14 @@ public class Order {
 
     public void setOrderRows(Set<OrderRow> orderRows) {
         this.orderRows = orderRows;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     @Override
