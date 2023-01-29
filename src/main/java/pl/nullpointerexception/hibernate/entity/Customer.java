@@ -2,6 +2,7 @@ package pl.nullpointerexception.hibernate.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,6 +18,9 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders;
+
+    @ElementCollection
+    private List<Address> address;
 
     public Long getId() {
         return id;
@@ -64,6 +68,14 @@ public class Customer {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> addressList) {
+        this.address = addressList;
     }
 
     @Override
