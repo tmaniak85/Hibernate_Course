@@ -2,12 +2,10 @@ package pl.nullpointerexception.hibernate;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import pl.nullpointerexception.hibernate.entity.batch.BatchReview;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class App32DeleteQuerying {
     private static Logger logger = LogManager.getLogger(App30UpdateQuerying.class);
