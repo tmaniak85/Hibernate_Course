@@ -12,6 +12,7 @@
         <class>pl.nullpointerexception.hibernate.entity.Order</class>
         <class>pl.nullpointerexception.hibernate.entity.OrderRow</class>
         <class>pl.nullpointerexception.hibernate.entity.batch.BatchReview</class>
+        <class>pl.nullpointerexception.hibernate.entity.CustomerDetails</class>
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
