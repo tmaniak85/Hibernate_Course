@@ -50,7 +50,7 @@ public class Order {
     private LocalDateTime created;
     private BigDecimal total;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "order_id")
     @BatchSize(size = 10)
 //    @Fetch(FetchMode.SUBSELECT)
