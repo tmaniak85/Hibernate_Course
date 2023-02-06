@@ -3,6 +3,7 @@ package pl.nullpointerexception.hibernate.entity;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,6 +25,21 @@ public class Customer {
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL, optional = false)
     private CustomerDetails customerDetails;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return Objects.equals(firstName, customer.firstName) &&
+                Objects.equals(lastName, customer.lastName) &&
+                Objects.equals(created, customer.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, created);
+    }
 
     public Long getId() {
         return id;

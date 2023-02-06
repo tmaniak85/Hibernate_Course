@@ -7,7 +7,9 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 //@NamedEntityGraph(
 //        name = "order-rows",
@@ -58,6 +60,21 @@ public class Order {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Customer customer;
+
+    private String uuid = UUID.randomUUID().toString();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(uuid, order.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
+    }
 
     public Long getId() {
         return id;
