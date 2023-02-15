@@ -3,7 +3,7 @@ package pl.nullpointerexception.hibernate.entity;
 import javax.persistence.*;
 
 @Entity
-public class Review {
+public class Review implements Comparable<Review> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,5 +52,10 @@ public class Review {
                 ", content='" + content + '\'' +
                 ", rating=" + rating +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Review o) {
+        return id.compareTo(o.id);
     }
 }
