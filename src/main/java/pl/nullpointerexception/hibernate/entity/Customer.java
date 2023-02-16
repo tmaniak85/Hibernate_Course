@@ -1,13 +1,18 @@
 package pl.nullpointerexception.hibernate.entity;
 
-import org.hibernate.annotations.SortComparator;
-import org.hibernate.annotations.SortNatural;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cache;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
+@Cacheable
+@Cache(region = "customer", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Customer {
 
     @Id
@@ -19,6 +24,7 @@ public class Customer {
     private LocalDateTime updated;
 
     @OneToMany(mappedBy = "customer")
+    @Cache(region = "orders", usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Order> orders;
 
     @ElementCollection
